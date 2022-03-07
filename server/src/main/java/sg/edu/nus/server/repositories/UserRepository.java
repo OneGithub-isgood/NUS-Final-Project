@@ -61,30 +61,14 @@ public class UserRepository {
 
     }
 
-    public boolean confirmNewWatchList(User user, ConsumerProduct product) {
+    public boolean confirmNewFavouriteProduct(User user, ConsumerProduct product) {
 
-        final SqlRowSet rs = templates.queryForRowSet(
-            SQL_GET_PRODUCT_BY_PRODUCTSTOREURL, product.getProductStoreUrl());
+        int numRecord = templates.update(
+            SQL_CREATE_NEW_FAVPRODUCT, product.getProductStoreUrl(), product.getProductName(), product.getProductImageUrl(), product.getSupermarketStore(),
+                product.getProductCurrentPrice(), product.getProductPreviousPrice(), product.getProductDiscountCondition(), product.getProductPercentageDiscount(),
+                user.getUsername());
 
-        if (rs.next()) {
-            if (rs.getInt("product_count") > 0) {
-                int numWLRecord = templates.update(SQL_CREATE_NEW_WATCHLIST,
-                user.getUsername(), product.getProductStoreUrl());
-                return numWLRecord > 0;
-            } else {
-                int numProductRecord = templates.update(SQL_CREATE_NEW_PRODUCT,
-                product.getProductStoreUrl(), product.getProductName(), product.getProductImageUrl(), product.getSupermarketStore());
-                if (numProductRecord > 0) {
-                    int numWLRecord = templates.update(SQL_CREATE_NEW_WATCHLIST,
-                    user.getUsername(), product.getProductStoreUrl());
-                    return numWLRecord > 0;
-                } else {
-                    return false;
-                }
-            }
-        } else {
-            return false;
-        }
+        return numRecord > 0;
     }
     
 }

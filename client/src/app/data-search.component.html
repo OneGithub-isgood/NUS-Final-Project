@@ -1,7 +1,10 @@
 <mat-progress-bar mode="indeterminate" color="primary" *ngIf="checkPromise == true">Searching</mat-progress-bar>
+<div *ngIf="resultProducts.length == 0">
+  <h3> Search '{{ userQuery }}' returns no result</h3>
+</div>
 <div *ngIf="resultProducts.length > 0">
   <div class="content" >
-    <h3> Search '{{ userQuery }}' Return {{ resultProducts.length }} results:</h3>
+    <h3> Search '{{ userQuery }}' returns {{ resultProducts.length }} result:</h3>
     <div fxLayout="row wrap" fxLayoutGap="10px grid">
       <div fxFlex="20%" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="33%" fxFlex.lg="25%" *ngFor="let p of resultProducts, let i = index">
         <mat-card class="mat-card">
@@ -30,7 +33,7 @@
             </p>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-raised-button (click)="verifyLoginCredential(p)">
+            <button mat-raised-button (click)="verifyUserAddWatchlist(p)">
               <mat-icon>query_builder</mat-icon>
             </button>
           </mat-card-actions>

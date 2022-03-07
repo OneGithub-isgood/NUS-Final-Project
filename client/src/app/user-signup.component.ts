@@ -38,7 +38,7 @@ export class UserSignupComponent implements OnInit {
         this.router.navigate(['/signup/completed'])
         })
       .catch(p => {
-        //this.clearInvalidPassword() // Try to clear password after knowing is wrong attempt
+        // Error
       })
   }
 

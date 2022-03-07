@@ -37,7 +37,6 @@ export class DataSearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loginUser = this.dataSvc.user; //Checking login status
     this.userQuery = this.activatedRoute.snapshot.queryParams['query'];
 
     this.sub$ = this.activatedRoute.queryParams.subscribe(v => {
@@ -52,7 +51,7 @@ export class DataSearchComponent implements OnInit, OnDestroy {
     })
   }
 
-  verifyLoginCredential(product: Product) {
+  verifyUserAddWatchlist(product: Product) {
     this.dialog.open(UserLoginComponent, {
       data: {
         selectedProduct: product
@@ -62,6 +61,5 @@ export class DataSearchComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.sub$.unsubscribe()
-    this.dataSvc.user = this.loginUser //Passing login status
   }
 }

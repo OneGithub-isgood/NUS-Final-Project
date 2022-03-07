@@ -75,5 +75,14 @@ public class User {
         return userAccountDetailUser;
     }
 
+    public static User createObjUserForInsertWatchlist(String jsonString) throws Exception {
+        JsonReader jR = Json.createReader(new ByteArrayInputStream(jsonString.getBytes()));
+        JsonObject jO = jR.readObject();
+        final User userInfo = new User();
+        userInfo.username = jO.getJsonObject("user").getString("username");
+
+        return userInfo;
+    }
+
 }
 

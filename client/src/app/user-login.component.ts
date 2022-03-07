@@ -20,7 +20,7 @@ export class UserLoginComponent implements OnInit {
   usernameFC = this.fb.control('', [ Validators.required, Validators.minLength(1) ])
   passwordFC = this.fb.control('', [ Validators.required, Validators.minLength(1) ])
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: ProductData ,private fb: FormBuilder, private router: Router, private dataSvc: DataService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: ProductData, private fb: FormBuilder, private router: Router, private dataSvc: DataService) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -31,17 +31,21 @@ export class UserLoginComponent implements OnInit {
 
   processLogin() {
     const user = this.loginForm.value as User
+    const product = this.data.selectedProduct
     this.dataSvc.getLoginCredential(user)
       .then(() => {
-        const navigationPacket: NavigationExtras = {
-          state: {
-            loginuser: user.username
-          }
-        }
-        sessionStorage.setItem("username", user.username)
-        console.log(this.data.selectedProduct.productCurrentPrice)
-        //this.router.navigate(['/'], navigationPacket)
-        })
+        console.info(product.productCurrentPrice)
+        this.dataSvc.createNewFavouriteProduct(user, product)
+          .then(() => {
+            const navigationPacket: NavigationExtras = {
+              state: {
+                loginuser: user.username
+              }
+            }
+            this.router.navigate(['/'], navigationPacket)
+            this.closeDialogBox()
+          })
+      })
       .catch(p => {
         this.clearInvalidPassword()
       })
@@ -49,6 +53,10 @@ export class UserLoginComponent implements OnInit {
 
   clearInvalidPassword() {
     this.passwordFC.setValue('')
+  }
+
+  closeDialogBox() {
+    // Empty funtion to call [mat-dialog-close] to close dialog box
   }
 
 }

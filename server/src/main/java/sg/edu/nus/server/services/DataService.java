@@ -76,9 +76,11 @@ public class DataService {
     public void sendEmail(User user, String verificationCode) throws AddressException, MessagingException {
 
         String gmailPwd = System.getenv("GMAIL_PASSWORD");
-        String linkQueryString = verificationCode; // https://lobang-philosophy.herokuapp.com/api/verify?username=
-        String emailHTML = "<!DOCTYPE html>\r\n<html>\r\n\t<body>\r\n\t\t<h3>Verify Lobang Philosophy Account</h3>\r\n\t\t<a href=\"http://localhost:8080/api/verify?username=" +
-            linkQueryString + "\">http://localhost:8080/api/verify?username=" + linkQueryString + "</a>\r\n\t</body>\r\n</html>\r\n";
+        String gmailAcct = System.getenv("GMAIL_ACCOUNT");
+        String linkQueryString = verificationCode; // http://localhost:8080/api/verify?username=
+        String emailHTML = "<!DOCTYPE html>\r\n<html>\r\n\t<body>\r\n\t\t<h3>Verify Lobang Philosophy Account</h3>\r\n\t\t<a href=\"https://lobang-philosophy.herokuapp.com/api/verify?username="
+            + linkQueryString + "\">https://lobang-philosophy.herokuapp.com/api/verify?username="
+            + linkQueryString + "</a>\r\n\t</body>\r\n</html>\r\n";
 
         Properties emailConfigProp = new Properties();
         emailConfigProp.put("mail.smtp.auth", "true");
@@ -88,12 +90,12 @@ public class DataService {
 
         Session emailSession = Session.getInstance(emailConfigProp, new javax.mail.Authenticator() {
             public PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("lobangphilosophy@gmail.com", gmailPwd); // Please don't hack my email ;)
+                return new PasswordAuthentication(gmailAcct, gmailPwd); // Please don't hack my email ;)
             }
         });
 
         Message emailMsg = new MimeMessage(emailSession);
-        emailMsg.setFrom(new InternetAddress("jupiterdolby@gmail.com", false));
+        emailMsg.setFrom(new InternetAddress(gmailAcct, false));
         emailMsg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.getEmail().toString()));
         emailMsg.setSubject("Confirm Your Lobang Philosophy Account");
         emailMsg.setContent("Confirm Your Lobang Philosophy Account", "text/html; charset=utf-8");
@@ -108,9 +110,9 @@ public class DataService {
 
     }
 
-    public Boolean createNewWatchList(User user, ConsumerProduct product) {
+    public Boolean createNewFavouriteProduct(User user, ConsumerProduct product) {
 
-        if (userRepo.confirmNewWatchList(user, product)) {
+        if (userRepo.confirmNewFavouriteProduct(user, product)) {
             return true;
         } else {
             return false;
@@ -282,18 +284,28 @@ public class DataService {
             String productDiscountConditionGiant = "";
 
             for (int pG = 0; pG < giantNumResult ; pG++) {
-                String productBrandGiant = docGiant
-                    .select("div[class=col-lg-2 col-md-4 col-6 col_product open-product-detail algolia-click open-single-page]").get(pG)
-                    .select("div[class=category-name]").get(0)
-                    .getElementsByTag("a")
-                    .text().trim();
-                String productItemNameGiant = docGiant
-                    .select("div[class=col-lg-2 col-md-4 col-6 col_product open-product-detail algolia-click open-single-page]").get(pG)
-                    .select("div[class=product_name]").get(0)
-                    .getElementsByTag("a")
-                    .text().trim();
-                ConsumerProduct productGiant = new ConsumerProduct(productBrandGiant + " " + productItemNameGiant);
+                ConsumerProduct productGiant = new ConsumerProduct();
+                try { // Product name with brand
+                    String productBrandGiant = docGiant
+                        .select("div[class=col-lg-2 col-md-4 col-6 col_product open-product-detail algolia-click open-single-page]").get(pG)
+                        .select("div[class=category-name]").get(0)
+                        .getElementsByTag("a")
+                        .text().trim();
 
+                    String productItemNameGiant = docGiant
+                        .select("div[class=col-lg-2 col-md-4 col-6 col_product open-product-detail algolia-click open-single-page]").get(pG)
+                        .select("div[class=product_name]").get(0)
+                        .getElementsByTag("a")
+                        .text().trim();
+                        productGiant.setProductName(productBrandGiant + " " + productItemNameGiant);
+                } catch (IndexOutOfBoundsException iooEX) { // Product name without brand
+                    String productNameGiant = docGiant
+                        .select("div[class=col-lg-2 col-md-4 col-6 col_product open-product-detail algolia-click open-single-page]").get(pG)
+                        .select("a[class=product-link]").get(0)
+                        .text().trim();
+                        productGiant.setProductName(productNameGiant);
+                }
+                
                 String productCurrentPriceMix = docGiant
                     .select("div[class=col-lg-2 col-md-4 col-6 col_product open-product-detail algolia-click open-single-page]").get(pG)
                     .select("div[class=content_price]").get(0)

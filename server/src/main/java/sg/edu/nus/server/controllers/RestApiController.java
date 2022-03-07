@@ -83,26 +83,28 @@ public class RestApiController {
 
     }
 
-    @PostMapping(path="/watchlist", produces=MediaType.APPLICATION_JSON_VALUE) // /api/watchlist
+    @PostMapping(path="/favproduct", produces=MediaType.APPLICATION_JSON_VALUE) // /api/favproduct
     public ResponseEntity<String> processAddWatchlist(@RequestBody String payload) {
 
         User user = null;
         ConsumerProduct product = null;
+
         try {
-            user = User.createObjUserForSignup(payload);
-            product = ConsumerProduct.createObjProduct(payload);
-            logger.log(Level.INFO, "Product in payload : %s".formatted(product.getProductName())+".");
+            user = User.createObjUserForInsertWatchlist(payload);
+            logger.log(Level.INFO, "User in payload : %s".formatted(user.getUsername()+"."));
+            product = ConsumerProduct.createObjProductForFavouriteProduct(payload);
+            logger.log(Level.INFO, "Current Price in payload : %s".formatted(product.getProductCurrentPrice())+".");
         } catch (Exception ex) {
             JsonObject err = Json.createObjectBuilder()
                 .add("Error", ex.getMessage())
                 .build();
             return ResponseEntity.badRequest().body(err.toString());
         }
-        if (dataSrv.createNewWatchList(user, product)) {
+        if (dataSrv.createNewFavouriteProduct(user, product)) {
             return ResponseEntity.ok("{}");
         } else {
             JsonObject err = Json.createObjectBuilder()
-                .add("Error", "Fail To Create New Watchlist")
+                .add("Error", "Fail To Create New Favourite Product")
                 .build();
             return ResponseEntity.badRequest().body(err.toString());
         }

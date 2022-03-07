@@ -21,10 +21,17 @@ export class DataService {
   }
 
   getLoginCredential(user: User): Promise<void> {
+    console.log(user)
     return lastValueFrom(this.http.post<void>('/api/login', user)) //http:localhost:8080/api/login
   }
 
   createNewUser(user: User): Promise<void> {
     return lastValueFrom(this.http.post<void>('/api/signup', user)) //http:localhost:8080/api/signup
+  }
+
+  createNewFavouriteProduct(user: User, product: Product): Promise<void> {
+    const body = {user: user, product: product}
+    console.log(body)
+    return lastValueFrom(this.http.post<void>('/api/favproduct', body)) //http:localhost:8080/api/favproduct
   }
 }

@@ -35,8 +35,7 @@
     <tr>
       <td></td>
       <td>
-        <button mat-raised-button color="primary" type="submit" (click)="processLogin()">Sign In</button>
-        <button (click)="clearInvalidPassword()">clear</button>
+        <button mat-raised-button color="primary" type="submit" (click)="processLogin()" [mat-dialog-close]="closeDialogBox()">Sign In</button>
       </td>
     </tr>
   </table>

@@ -17,12 +17,6 @@ public class SQLs {
     public static final String SQL_UPDATE_VERIFY_STATUS_BY_USERNAME =
         "UPDATE user SET is_verified = TRUE WHERE username = ?";
 
-    public static final String SQL_GET_PRODUCT_BY_PRODUCTSTOREURL =
-        "SELECT count(*) as product_count FROM product WHERE productStoreUrl = ?";
-    
-    public static final String SQL_CREATE_NEW_PRODUCT =
-        "INSERT INTO product (productStoreUrl, productName, productImageUrl, supermarketStore) VALUES (?, ?, ?, ?)";
-
-    public static final String SQL_CREATE_NEW_WATCHLIST =
-        "INSERT INTO watchlist (username, productStoreUrl) VALUES (?, ?)";
+    public static final String SQL_CREATE_NEW_FAVPRODUCT =
+        "INSERT INTO favProduct (productStoreUrl, productName, productImageUrl, supermarketStore, productCurrentPrice, productPreviousPrice, productDiscountCondition, productPercentageDiscount, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, NgForm } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { UserLoginComponent } from './user-login.component';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +13,7 @@ export class AppComponent implements OnInit {
 
   title = 'IBF2021Day24Task';
 
-  constructor(private router: Router, private fb: FormBuilder) { }
+  constructor(public dialog: MatDialog, private router: Router, private fb: FormBuilder) { }
 
   ngOnInit(): void {
 
@@ -25,5 +27,8 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/search'], { queryParams: params })
   }
 
+  verifyLoginCredential() {
+    this.dialog.open(UserLoginComponent, { });
+  }
 }
 

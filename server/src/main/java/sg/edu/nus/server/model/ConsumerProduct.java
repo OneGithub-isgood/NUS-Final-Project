@@ -111,14 +111,18 @@ public class ConsumerProduct {
         this.productName = productName;
     }
 
-    public static ConsumerProduct createObjProduct(String jsonString) throws Exception {
+    public static ConsumerProduct createObjProductForFavouriteProduct(String jsonString) throws Exception {
         JsonReader jR = Json.createReader(new ByteArrayInputStream(jsonString.getBytes()));
         JsonObject jO = jR.readObject();
         final ConsumerProduct product = new ConsumerProduct();
-        product.productStoreUrl = jO.getString("productStoreUrl");
-        product.productName = jO.getString("productName");
-        product.productImageUrl = jO.getString("productImageUrl");
-        product.supermarketStore = jO.getString("supermarketStore");
+        product.setProductStoreUrl(jO.getJsonObject("product").getString("productStoreUrl"));
+        product.setProductName(jO.getJsonObject("product").getString("productName"));
+        product.setProductImageUrl(jO.getJsonObject("product").getString("productImageUrl"));
+        product.setSupermarketStore(jO.getJsonObject("product").getString("supermarketStore"));
+        product.setProductCurrentPrice((float)jO.getJsonObject("product").getJsonNumber("productCurrentPrice").doubleValue());
+        product.setProductPreviousPrice((float)jO.getJsonObject("product").getJsonNumber("productPreviousPrice").doubleValue());
+        product.setProductDiscountCondition(jO.getJsonObject("product").getString("productDiscountCondition"));
+        product.setProductPercentageDiscount(jO.getJsonObject("product").getInt("productPercentageDiscount"));
         return product;
     }
     
