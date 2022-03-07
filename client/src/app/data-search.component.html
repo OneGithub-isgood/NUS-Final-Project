@@ -1,0 +1,42 @@
+<mat-progress-bar mode="indeterminate" color="primary" *ngIf="checkPromise == true">Searching</mat-progress-bar>
+<div *ngIf="resultProducts.length > 0">
+  <div class="content" >
+    <h3> Search '{{ userQuery }}' Return {{ resultProducts.length }} results:</h3>
+    <div fxLayout="row wrap" fxLayoutGap="10px grid">
+      <div fxFlex="20%" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="33%" fxFlex.lg="25%" *ngFor="let p of resultProducts, let i = index">
+        <mat-card class="mat-card">
+          <mat-card-header class="mat-card-header">
+            <div mat-card-avatar >
+              <a [href]="p.productStoreUrl">
+                <img src="../../assets/icon/{{p.supermarketStore}}.png" height="50" width="60">
+              </a>
+            </div>
+            <mat-card-title class="mat-card-title">
+              <span class="price" > ${{ p.productCurrentPrice | number : '1.2-2' }} </span>
+              <span class="slashedprice" *ngIf="p.productPreviousPrice > 0" ><s> ${{ p.productPreviousPrice | number : '1.2-2' }} </s></span>
+            </mat-card-title>
+            <mat-card-subtitle class="mat-card-subtitle"> {{ p.productName }} </mat-card-subtitle>
+          </mat-card-header>
+          <div class="image" >
+            <img mat-card-image [src]="p.productImageUrl" alt="" height="165" width="150" >
+            <div class="discount-percentage" *ngIf="p.productPercentageDiscount > 0" >
+              &nbsp;{{ p.productPercentageDiscount | number : '1.0-0' }}% OFF&nbsp;
+            </div>
+          </div>
+          <mat-card-content class="mat-card-content">
+            <p>
+              <span *ngIf="p.productDiscountCondition != ''" > *{{ p.productDiscountCondition }} </span>
+              <span *ngIf="p.productDiscountCondition == '' && p.productPercentageDiscount == 0" > No promotion available </span>
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button (click)="verifyLoginCredential(p)">
+              <mat-icon>query_builder</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
+

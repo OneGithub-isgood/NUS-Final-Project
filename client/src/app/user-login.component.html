@@ -1,0 +1,43 @@
+<h4>Sign in to Lobang Philosophy Account</h4>
+<form [formGroup]="loginForm">
+  <table>
+    <tr>
+      <td>
+        <label>Username:</label>
+      </td>
+      <td>
+        <mat-form-field>
+          <input matInput formControlName="username" placeholder="Username" />
+          <mat-error *ngIf="usernameFC.hasError('required')">Please enter a username</mat-error>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Password:</label>
+      </td>
+      <td>
+        <div>
+          <mat-form-field appearance="fill" >
+            <input matInput formControlName="passcode" [type]="hide ? 'password' : 'text'" >
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" >
+              <mat-icon> {{ hide ? 'visibility_off' : 'visibility' }} </mat-icon>
+            </button>
+            <mat-error *ngIf="passwordFC.hasError('required')">Password is invalid</mat-error>
+          </mat-form-field>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <label>No account?</label>
+      <a [routerLink]="['/signup']" mat-dialog-close>Create one!</a>
+    </tr>
+    <tr>
+      <td></td>
+      <td>
+        <button mat-raised-button color="primary" type="submit" (click)="processLogin()">Sign In</button>
+        <button (click)="clearInvalidPassword()">clear</button>
+      </td>
+    </tr>
+  </table>
+</form>

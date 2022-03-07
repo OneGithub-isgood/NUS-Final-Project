@@ -1,0 +1,51 @@
+<mat-progress-bar mode="indeterminate" color="primary" *ngIf="checkPromise == true">Searching</mat-progress-bar>
+<h2>Create Lobang Philosophy Account</h2>
+<form [formGroup]="loginForm">
+  <table>
+    <tr>
+      <td>
+        <label>Username:</label>
+      </td>
+      <td>
+        <mat-form-field>
+          <input matInput formControlName="username" placeholder="Username" />
+          <mat-error *ngIf="usernameFC.hasError('required')">Username need min 6 characters</mat-error>
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Password:</label>
+      </td>
+      <td>
+        <div>
+          <mat-form-field appearance="fill" >
+            <input matInput formControlName="passcode" [type]="hide ? 'password' : 'text'" >
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" >
+              <mat-icon> {{ hide ? 'visibility_off' : 'visibility' }} </mat-icon>
+            </button>
+            <mat-error *ngIf="passwordFC.hasError('required')">Username need min 8 characters</mat-error>
+          </mat-form-field>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Emaill Address:</label>
+      </td>
+      <td>
+        <mat-form-field>
+          <input matInput formControlName="email" placeholder="Email Address" />
+          <mat-error *ngIf="emailAddFC.hasError('required')">Please enter a valid email address</mat-error>
+        </mat-form-field>
+      </td>
+    </tr>
+    <h4>You need to verify your email address after you create your account</h4>
+    <tr>
+      <td></td>
+      <td>
+        <button mat-raised-button color="primary" type="submit" (click)="processSignup()">Sign Up</button>
+      </td>
+    </tr>
+  </table>
+</form>

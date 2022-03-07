@@ -1,0 +1,42 @@
+.content {
+  padding: 20px;
+}
+
+.mat-card {
+  width: 250px;
+}
+
+.mat-card-title {
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.mat-card-subtitle {
+  height: 3em;
+}
+
+.image {
+  height: 24vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.discount-percentage {
+  text-align: center;
+  background-color: red;
+  color: white;
+  font-size: 2em;
+}
+
+.mat-card-content {
+  padding: 1em;
+  height: 3em;
+  text-align: center;
+}
+
+.slashedprice {
+  color: red;
+}

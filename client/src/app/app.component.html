@@ -1,0 +1,19 @@
+<mat-toolbar color="warn">
+  <mat-toolbar-row>
+    <span>Lobang Philosophy</span>
+    <span class="toolbar-spacer"></span>
+  </mat-toolbar-row>
+  <mat-toolbar-row>
+    <a href="/" mat-raised-button>
+      <mat-icon aria-hidden="false" aria-label="home-icon" >home</mat-icon>
+    </a>
+    <span class="toolbar-spacer"></span>
+    <form #form="ngForm" (ngSubmit)="search(form)">
+      <input type="text" name="query" ngModel placeholder="Search product">
+      <button type="submit">Search</button>
+    </form>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div class="box">
+  <router-outlet></router-outlet>
+</div>
