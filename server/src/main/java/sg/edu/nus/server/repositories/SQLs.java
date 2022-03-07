@@ -21,5 +21,5 @@ public class SQLs {
         "INSERT INTO favProduct (productStoreUrl, productName, productImageUrl, supermarketStore, productCurrentPrice, productPreviousPrice, productDiscountCondition, productPercentageDiscount, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     public static final String SQL_GET_SAVED_PRODUCTS_BY_USERNAME =
-        "SELECT productStoreUrl, productName, productImageUrl, supermarketStore, productCurrentPrice, productPreviousPrice, productDiscountCondition, productPercentageDiscount, log_time FROM favProduct f, user u WHERE f.username = ? AND is_verified = TRUE ORDER by log_time";
+        "SELECT productStoreUrl, productName, productImageUrl, supermarketStore, productCurrentPrice, productPreviousPrice, productDiscountCondition, productPercentageDiscount, log_time FROM favProduct f, user u WHERE u.username = f.username AND f.username = ? AND is_verified = TRUE ORDER by log_time";
 }

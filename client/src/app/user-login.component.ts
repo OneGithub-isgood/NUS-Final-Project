@@ -45,6 +45,7 @@ export class UserLoginComponent implements OnInit {
               }
             }
             this.router.navigate([`/archive/${user.username}`], navigationPacket)
+            this.closeDialogBox()
           })
       })
       .catch(p => {
@@ -54,6 +55,10 @@ export class UserLoginComponent implements OnInit {
 
   clearInvalidPassword() {
     this.passwordFC.setValue('')
+  }
+
+  closeDialogBox() {
+    // Empty function to close dialog box
   }
 
 }
