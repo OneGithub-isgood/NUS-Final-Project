@@ -31,9 +31,5 @@ export class DataMainComponent implements OnInit, OnDestroy {
     }
   }
 
-  seeName() {
-    //this.dataSvc.user = this.loginUser
-    console.log(this.dataSvc.user)
-  }
 
 }

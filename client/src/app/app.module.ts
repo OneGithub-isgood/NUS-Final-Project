@@ -18,12 +18,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DataSearchComponent } from './data-search.component';
 import { DataMainComponent } from './data-main.component';
 import { DataService } from './service';
-import { RouterModule, ROUTER_CONFIGURATION, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserLoginComponent } from './user-login.component';
 import { UserSignupComponent } from './user-signup.component';
-import { UserWatchlistComponent } from './user-watchlist.component';
 import { UserAftersignupComponent } from './user-aftersignup.component';
+import { UserArchiveComponent } from './user-archive.component';
 
 
 const appRoutes: Routes = [
@@ -32,6 +32,7 @@ const appRoutes: Routes = [
   { path: 'login', component: UserLoginComponent },
   { path: 'signup', component: UserSignupComponent },
   { path: 'signup/completed', component: UserAftersignupComponent },
+  { path: 'archive/:username', component: UserArchiveComponent },
   //{ path: '**', redirectTo: '/', pathMatch: 'full' }
 ]
 
@@ -42,8 +43,8 @@ const appRoutes: Routes = [
     DataMainComponent,
     UserLoginComponent,
     UserSignupComponent,
-    UserWatchlistComponent,
-    UserAftersignupComponent
+    UserAftersignupComponent,
+    UserArchiveComponent
   ],
   imports: [
     BrowserModule,

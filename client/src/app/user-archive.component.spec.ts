@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserWatchlistComponent } from './user-watchlist.component';
+import { UserArchiveComponent } from './user-archive.component';
 
-describe('UserWatchlistComponent', () => {
-  let component: UserWatchlistComponent;
-  let fixture: ComponentFixture<UserWatchlistComponent>;
+describe('UserArchiveComponent', () => {
+  let component: UserArchiveComponent;
+  let fixture: ComponentFixture<UserArchiveComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserWatchlistComponent ]
+      declarations: [ UserArchiveComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserWatchlistComponent);
+    fixture = TestBed.createComponent(UserArchiveComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

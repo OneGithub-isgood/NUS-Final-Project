@@ -10,6 +10,9 @@ import sg.edu.nus.server.model.User;
 
 import static sg.edu.nus.server.repositories.SQLs.*;
 
+import java.util.LinkedList;
+import java.util.List;
+
 @Repository
 public class UserRepository {
 
@@ -69,6 +72,19 @@ public class UserRepository {
                 user.getUsername());
 
         return numRecord > 0;
+    }
+
+    public List<ConsumerProduct> confirmArchiveProducts(String username) {
+
+        List<ConsumerProduct> result = new LinkedList<>();
+
+        final SqlRowSet rs = templates.queryForRowSet(
+            SQL_GET_SAVED_PRODUCTS_BY_USERNAME, username);
+        
+        while (rs.next()) {
+            result.add(ConsumerProduct.createObjectProduct(rs));
+        }
+        return result;
     }
     
 }

@@ -1,4 +1,4 @@
-<h4>Sign in to Lobang Philosophy Account</h4>
+<h4 class="dialog-title">Sign in to Lobang Philosophy Account</h4>
 <form [formGroup]="loginForm">
   <table>
     <tr>
@@ -8,6 +8,7 @@
       <td>
         <mat-form-field>
           <input matInput formControlName="username" placeholder="Username" />
+          <mat-hint>Only verified email can sign in</mat-hint>
           <mat-error *ngIf="usernameFC.hasError('required')">Please enter a username</mat-error>
         </mat-form-field>
       </td>
@@ -35,7 +36,7 @@
     <tr>
       <td></td>
       <td>
-        <button mat-raised-button color="primary" type="submit" (click)="processLogin()" [mat-dialog-close]="closeDialogBox()">Sign In</button>
+        <button mat-raised-button color="primary" type="submit" (click)="processLoginToAddFavourite()" >Sign In</button>
       </td>
     </tr>
   </table>

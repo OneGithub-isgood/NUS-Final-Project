@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +46,18 @@ public class RestApiController {
 
     }
 
+    @GetMapping(path="/archive/{username}", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getArchivedProductData(
+            @PathVariable(name="username", required=true) String username) { // /api/archive/username
+
+        logger.log(Level.INFO, "Path Variable : %s".formatted(username)+".");
+        List<ConsumerProduct> archivedProducts = dataSrv.getArchiveProducts(username);
+        String respBody = dataSrv.ArchivedListToJsonString(archivedProducts);
+
+        return ResponseEntity.ok(respBody);
+
+    }
+
     @GetMapping(path="/verify", produces=MediaType.TEXT_HTML_VALUE)
     public ResponseEntity<String> verifyUserAccount(
             @RequestParam(name="username") String verificationCode) { // /api/verify?username=aeiou
@@ -58,6 +71,8 @@ public class RestApiController {
 
     }
 
+
+
     @PostMapping(path="/login", produces=MediaType.APPLICATION_JSON_VALUE) // /api/login
     public ResponseEntity<String> checkUserLogin(@RequestBody String payload) {
 
@@ -70,7 +85,6 @@ public class RestApiController {
                 .build();
             return ResponseEntity.badRequest().body(err.toString());
         }
-        logger.log(Level.INFO, "User Passcode : %s".formatted(user.getPasscode())+".");
         if (dataSrv.checkLoginCredential(user)) {
             return ResponseEntity.ok("{}");
         } else {
@@ -91,9 +105,9 @@ public class RestApiController {
 
         try {
             user = User.createObjUserForInsertWatchlist(payload);
-            logger.log(Level.INFO, "User in payload : %s".formatted(user.getUsername()+"."));
+            //logger.log(Level.INFO, "User in payload : %s".formatted(user.getUsername()+"."));
             product = ConsumerProduct.createObjProductForFavouriteProduct(payload);
-            logger.log(Level.INFO, "Current Price in payload : %s".formatted(product.getProductCurrentPrice())+".");
+            //logger.log(Level.INFO, "Current Price in payload : %s".formatted(product.getProductCurrentPrice())+".");
         } catch (Exception ex) {
             JsonObject err = Json.createObjectBuilder()
                 .add("Error", ex.getMessage())

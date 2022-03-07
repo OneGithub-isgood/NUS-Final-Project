@@ -1,12 +1,14 @@
 <mat-toolbar color="warn">
-  <mat-toolbar-row>
-    <span>Lobang Philosophy</span>
-    <span class="toolbar-spacer"></span>
+  <mat-toolbar-row class="app_title">
+    <span >Lobang Philosophy</span>
   </mat-toolbar-row>
   <mat-toolbar-row>
     <a href="/" mat-raised-button>
       <mat-icon aria-hidden="false" aria-label="home-icon" >home</mat-icon>
-    </a>
+    </a>&nbsp;
+    <!-- <button mat-raised-button (click)="verifyLoginCredential()">
+      <mat-icon aria-hidden="false" aria-label="history-icon" >history</mat-icon>
+    </button> -->
     <span class="toolbar-spacer"></span>
     <form #form="ngForm" (ngSubmit)="search(form)">
       <input type="text" name="query" ngModel placeholder="Search product">

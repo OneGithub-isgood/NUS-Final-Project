@@ -1,3 +1,5 @@
+import { Time } from "@angular/common"
+
 export interface Product {
   productName: string
   productCurrentPrice: number
@@ -7,6 +9,7 @@ export interface Product {
   productImageUrl: string
   productStoreUrl: string
   supermarketStore: string
+  log_time: Date
 }
 
 export interface User {

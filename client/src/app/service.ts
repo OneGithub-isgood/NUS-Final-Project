@@ -11,8 +11,6 @@ export class DataService {
 
   constructor(private http: HttpClient) {}
 
-  public user!: User;
-
   getProducts(product: string): Promise<Product[]> {
     const params = new HttpParams().set("product", product)
     return lastValueFrom(
@@ -33,5 +31,10 @@ export class DataService {
     const body = {user: user, product: product}
     console.log(body)
     return lastValueFrom(this.http.post<void>('/api/favproduct', body)) //http:localhost:8080/api/favproduct
+  }
+
+  getFavouriteProduct(username: string): Promise<Product[]> {
+    return lastValueFrom(
+      this.http.get<Product[]>(`/api/archive/${username}`)) //http:localhost:8080/api/archive/username
   }
 }

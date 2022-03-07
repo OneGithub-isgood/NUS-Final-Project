@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogClose, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NavigationExtras } from '@angular/router';
+import { skip } from 'rxjs';
 import { ProductData } from './data-search.component';
 import { User } from './module';
 import { DataService } from './service';
@@ -29,12 +30,13 @@ export class UserLoginComponent implements OnInit {
     })
   }
 
-  processLogin() {
+
+
+  processLoginToAddFavourite() {
     const user = this.loginForm.value as User
-    const product = this.data.selectedProduct
     this.dataSvc.getLoginCredential(user)
       .then(() => {
-        console.info(product.productCurrentPrice)
+        const product = this.data.selectedProduct
         this.dataSvc.createNewFavouriteProduct(user, product)
           .then(() => {
             const navigationPacket: NavigationExtras = {
@@ -42,8 +44,7 @@ export class UserLoginComponent implements OnInit {
                 loginuser: user.username
               }
             }
-            this.router.navigate(['/'], navigationPacket)
-            this.closeDialogBox()
+            this.router.navigate([`/archive/${user.username}`], navigationPacket)
           })
       })
       .catch(p => {
@@ -53,10 +54,6 @@ export class UserLoginComponent implements OnInit {
 
   clearInvalidPassword() {
     this.passwordFC.setValue('')
-  }
-
-  closeDialogBox() {
-    // Empty funtion to call [mat-dialog-close] to close dialog box
   }
 
 }

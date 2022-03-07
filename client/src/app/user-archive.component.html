@@ -1,11 +1,10 @@
 <mat-progress-bar mode="indeterminate" color="primary" *ngIf="checkPromise == true">Searching</mat-progress-bar>
 <div *ngIf="resultProducts.length == 0">
-  <h3 *ngIf="checkPromise == false"> Search '{{ userQuery }}' returns no result</h3>
+  <h3> You have not saved any product </h3>
 </div>
 <div *ngIf="resultProducts.length > 0">
   <div class="content" >
-    <h3> Search '{{ userQuery }}' returns {{ resultProducts.length }} result:</h3>
-    <h6> Only maximum of first 15 results from each supermarket will be display </h6>
+    <h3> You have {{ resultProducts.length }} saved price tag:</h3>
     <div fxLayout="row wrap" fxLayoutGap="10px grid">
       <div fxFlex="20%" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="33%" fxFlex.lg="25%" *ngFor="let p of resultProducts, let i = index">
         <mat-card class="mat-card">
@@ -33,14 +32,11 @@
               <span *ngIf="p.productDiscountCondition == '' && p.productPercentageDiscount == 0" > No promotion available </span>
             </p>
           </mat-card-content>
-          <mat-card-actions>
-            <button mat-raised-button (click)="verifyUserAddWatchlist(p)">
-              <mat-icon>query_builder</mat-icon>
-            </button>
-          </mat-card-actions>
+          <mat-card-footer>
+            <span> {{ p.log_time }} </span>
+          </mat-card-footer>
         </mat-card>
       </div>
     </div>
   </div>
 </div>
-

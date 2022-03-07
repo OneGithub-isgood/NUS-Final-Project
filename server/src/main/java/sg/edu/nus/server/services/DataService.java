@@ -120,6 +120,12 @@ public class DataService {
 
     }
 
+    public List<ConsumerProduct> getArchiveProducts(String username) {
+
+        return userRepo.confirmArchiveProducts(username);
+
+    }
+
     public List<ConsumerProduct> getProductDetails(String userInput) {
         final Logger logger = Logger.getLogger(DataService.class.getName());
 
@@ -148,8 +154,8 @@ public class DataService {
         try {
             Document doc = Jsoup.connect(urlAddQueryFairprice).get();
             Elements allProducts = doc.select("div[class=sc-1plwklf-0 iknXK product-container]");
-            if (allProducts.size() > 10) {
-                fairpriceNumResult = 10;
+            if (allProducts.size() > 15) {
+                fairpriceNumResult = 15;
             } else {
                 fairpriceNumResult = allProducts.size();
             }
@@ -273,8 +279,8 @@ public class DataService {
         try {
             Document docGiant = Jsoup.connect(urlAddQueryGiant).get();
             Elements allProductsGiant = docGiant.select("div[class=col-lg-2 col-md-4 col-6 col_product open-product-detail algolia-click open-single-page]");
-            if (allProductsGiant.size() > 10) {
-                giantNumResult  = 10;
+            if (allProductsGiant.size() > 15) {
+                giantNumResult  = 15;
             } else {
                 giantNumResult  = allProductsGiant.size();
             }
@@ -423,6 +429,25 @@ public class DataService {
                 .add("productImageUrl", product.getProductImageUrl())
                 .add("productStoreUrl", product.getProductStoreUrl())
                 .add("supermarketStore", product.getSupermarketStore());
+            jsonArrBuilderProducts.add(jsonObj);
+        }
+        JsonArray jsonArrayProducts = jsonArrBuilderProducts.build();
+        return jsonArrayProducts.toString();
+    }
+
+    public String ArchivedListToJsonString(List<ConsumerProduct> productList) {
+        JsonArrayBuilder jsonArrBuilderProducts = Json.createArrayBuilder();
+        for (ConsumerProduct product: productList) {
+            JsonObjectBuilder jsonObj = Json.createObjectBuilder()
+                .add("productName", product.getProductName())
+                .add("productCurrentPrice", product.getProductCurrentPrice())
+                .add("productPreviousPrice", product.getProductPreviousPrice())
+                .add("productDiscountCondition", product.getProductDiscountCondition())
+                .add("productPercentageDiscount", product.getProductPercentageDiscount())
+                .add("productImageUrl", product.getProductImageUrl())
+                .add("productStoreUrl", product.getProductStoreUrl())
+                .add("supermarketStore", product.getSupermarketStore())
+                .add("log_time", product.getLog_time().toString());
             jsonArrBuilderProducts.add(jsonObj);
         }
         JsonArray jsonArrayProducts = jsonArrBuilderProducts.build();

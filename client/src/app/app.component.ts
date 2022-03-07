@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, NgForm } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { User } from './module';
 import { UserLoginComponent } from './user-login.component';
 
 @Component({
@@ -28,7 +29,7 @@ export class AppComponent implements OnInit {
   }
 
   verifyLoginCredential() {
-    this.dialog.open(UserLoginComponent, { });
+    this.dialog.open(UserLoginComponent, { })
   }
 }
 

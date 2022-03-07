@@ -39,7 +39,7 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- Add-on dependency to use Jsoup, Json, MySQL Redis Database in this project-->
+		<!-- Add-on dependency to use Jsoup, Json, Mail, MySQL Database in this project-->
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>jakarta.json</artifactId>
